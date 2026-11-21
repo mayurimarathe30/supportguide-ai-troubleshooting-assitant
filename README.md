@@ -46,11 +46,7 @@ The app loads `.env` at startup and does not override environment variables alre
 - The local demo server binds to `127.0.0.1`. Do not expose it to a public network.
 - Escalation suggestions are sample routing guidance and should be replaced with the organization’s actual team names and process.
 
-## AI use and individual contribution
 
-OpenAI Codex assisted with the initial application and sample knowledge base. Before submitting, review the code, make changes you understand, and accurately describe the parts you personally changed and verified. Do not claim work you did not perform.
-
-## Manual verification before submission
 
 - Start the app and open the local page.
 - Try the payment API, database timeout, and unsupported printer examples in the app.
