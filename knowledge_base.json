@@ -1,0 +1,82 @@
+[
+  {
+    "id": "KB-001",
+    "title": "Payment API returns HTTP 500",
+    "category": "Payments / API",
+    "symptoms": ["Checkout request returns HTTP 500", "Payment attempts fail intermittently", "Application reports an internal server error"],
+    "keywords": ["payment", "checkout", "500", "server", "transaction", "gateway", "api", "dependency"],
+    "checks": ["Confirm the affected endpoint, start time, frequency, and whether all users are affected.", "Review application logs around a failed request; redact tokens, card data, and personal information.", "Check the payment dependency health dashboard and recent deployment or configuration changes.", "Compare failed and successful request IDs and timestamps; do not retry charges manually without the approved payment procedure."],
+    "escalation": "Payments engineering or the on-call service owner if failures are widespread, persistent, or charging status is unclear; involve the incident lead for material customer impact.",
+    "limitations": "An HTTP 500 indicates a server-side error response; it does not by itself prove whether the application, gateway, or a dependency caused it. Follow the approved payment reconciliation process."
+  },
+  {
+    "id": "KB-002",
+    "title": "Database connection timeouts",
+    "category": "Database / Connectivity",
+    "symptoms": ["Application cannot obtain a database connection", "Connection pool is exhausted", "Database operations time out"],
+    "keywords": ["database", "db", "sql", "connection", "timeout", "pool", "network", "latency"],
+    "checks": ["Record the exact timeout message, timestamp, affected service, and scope.", "Check database availability and connection capacity using approved monitoring.", "Review application connection-pool metrics and recent changes to pool size or traffic.", "Check for network or DNS alerts between the application and database; do not change pool limits without the service owner."],
+    "escalation": "Database operations for database capacity or health signals; application owner for pool saturation or a service-side change; network operations if connectivity alerts are present.",
+    "limitations": "A timeout can have several causes. The symptom alone cannot establish whether the database, application pool, or network is responsible."
+  },
+  {
+    "id": "KB-003",
+    "title": "Users cannot sign in after password reset",
+    "category": "Identity / Authentication",
+    "symptoms": ["Login fails after a password reset", "User sees invalid credentials", "Sign-in works for some users but not others"],
+    "keywords": ["login", "signin", "sign-in", "authentication", "auth", "password", "reset", "account", "lockout"],
+    "checks": ["Confirm whether one user or multiple users are affected and capture the exact error text.", "Check account lockout status and identity-provider service health using approved tools.", "Confirm the reset completed and the user is using the correct account and sign-in method.", "Check for a recent identity policy or single sign-on change; never ask the user to send a password or one-time code."],
+    "escalation": "Identity and access management team for account state, identity-provider alerts, or policy changes; service desk lead for an isolated account issue.",
+    "limitations": "A failure after reset is a timing correlation, not proof that the reset caused the issue. Do not collect credentials or authentication codes."
+  },
+  {
+    "id": "KB-004",
+    "title": "Application response is slow",
+    "category": "Application / Performance",
+    "symptoms": ["Pages load slowly", "Requests have high latency", "Users report intermittent slowness"],
+    "keywords": ["slow", "latency", "performance", "response", "timeout", "load", "degradation", "application"],
+    "checks": ["Establish start time, affected pages or operations, user scope, and whether the issue is constant or intermittent.", "Compare response-time monitoring with the normal baseline and check for an active incident.", "Review recent releases and dependency health for the same time window.", "Capture request IDs and timestamps for slow requests; avoid collecting personal or secret data."],
+    "escalation": "Application on-call if latency is sustained or broad; dependency owner if monitoring points to a downstream service; incident lead if business-critical workflows are impaired.",
+    "limitations": "User reports alone do not identify a bottleneck. Use telemetry and the service owner’s runbook before changing capacity or configuration."
+  },
+  {
+    "id": "KB-005",
+    "title": "Email delivery is delayed or failing",
+    "category": "Messaging / Email",
+    "symptoms": ["Messages remain queued", "Recipients do not receive expected email", "Mail delivery reports show temporary failures"],
+    "keywords": ["email", "mail", "smtp", "delivery", "queued", "bounce", "recipient", "message"],
+    "checks": ["Confirm sender and recipient domains, approximate send time, and whether all recipients are affected.", "Review the mail service status and message-trace or queue data using approved tools.", "Check for bounce details, quota alerts, or recent mail-flow rule changes.", "Do not resend sensitive or bulk messages until duplicate-delivery risk is understood."],
+    "escalation": "Messaging operations for queue, routing, or mail-flow alerts; application owner if only one application’s notifications are affected.",
+    "limitations": "A missing email can result from delivery delay, filtering, address issues, or application behavior; the symptom alone does not confirm which."
+  },
+  {
+    "id": "KB-006",
+    "title": "DNS lookup or service name resolution failure",
+    "category": "Network / DNS",
+    "symptoms": ["Service hostname cannot be resolved", "Name resolution intermittently fails", "Application reports unknown host"],
+    "keywords": ["dns", "lookup", "hostname", "resolve", "resolution", "unknown host", "network", "connectivity"],
+    "checks": ["Capture the hostname, timestamp, affected network or environment, and exact error.", "Check internal DNS service health and recent DNS record changes through approved tools.", "Compare resolution from an affected and unaffected environment if permitted.", "Check whether the issue affects one hostname or multiple services before changing records or caches."],
+    "escalation": "Network operations for resolver or broad name-resolution issues; service owner for a specific service record or endpoint change.",
+    "limitations": "A DNS-looking error may also be caused by client configuration or network reachability. Do not edit production records as a troubleshooting shortcut."
+  },
+  {
+    "id": "KB-007",
+    "title": "API rate limit responses",
+    "category": "API / Capacity",
+    "symptoms": ["API returns HTTP 429", "Requests are throttled", "Retry-after response header is present"],
+    "keywords": ["api", "429", "rate", "limit", "throttle", "quota", "retry", "capacity"],
+    "checks": ["Confirm the API endpoint, request volume, affected client, and whether a Retry-After value is returned.", "Review approved API gateway usage and rate-limit dashboards.", "Check for a traffic spike, retry loop, or recent client release.", "Use the documented backoff policy; do not increase quotas or disable throttling without service-owner approval."],
+    "escalation": "API or platform owner if normal traffic is throttled or the limit configuration appears incorrect; client application owner if retries or a traffic spike are suspected.",
+    "limitations": "HTTP 429 means requests were rate limited; it does not alone indicate a platform outage or justify raising a limit."
+  },
+  {
+    "id": "KB-008",
+    "title": "Insufficient information / unsupported issue",
+    "category": "General triage",
+    "symptoms": ["Issue does not match a known procedure", "Description lacks service or error detail", "No relevant source found"],
+    "keywords": ["unknown", "unsupported", "unclear", "other", "not working", "error"],
+    "checks": ["Ask for the service or application name and the exact observed behavior.", "Capture the full error text, when it began, how often it occurs, and who is affected.", "Ask whether a relevant deployment, configuration, or dependency change occurred.", "Use the organization’s incident intake and escalation procedure; do not apply a guessed fix."],
+    "escalation": "L1/L2 lead to classify and route once service, impact, and evidence are available.",
+    "limitations": "This sample knowledge base cannot cover every issue. No resolution should be inferred from a weak match."
+  }
+]
