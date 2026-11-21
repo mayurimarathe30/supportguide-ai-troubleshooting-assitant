@@ -33,7 +33,10 @@ The app loads `.env` at startup and does not override environment variables alre
 
 ## Files
 
-- `app.py` — local web server, retrieval, optional model call, and browser UI.
+- `app.py` — local web server, retrieval, and optional model call.
+- `index.html` — page structure and content.
+- `styles.css` — responsive visual styling.
+- `app.js` — browser interactions and display of analysis results.
 - `knowledge_base.json` — simulated sample guidance; edit this to add or update entries.
 - `run.bat` — Windows launcher.
 

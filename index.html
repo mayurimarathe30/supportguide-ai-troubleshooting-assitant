@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SupportGuide | L1/L2 assistant</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <header class="top">
+        <div class="brand">SupportGuide</div>
+        <div class="tag">Sample knowledge-base assistant · L1/L2 support</div>
+    </header>
+    <main class="wrap">
+        <section class="intro">
+            <p class="kicker">L1/L2 support tool</p>
+            <h1>Find a grounded next step.</h1>
+            <p>Describe a support issue. SupportGuide searches its sample knowledge base, shows the sources it used, and
+                offers checks without pretending to access your systems.</p>
+        </section>
+        <div class="grid">
+            <section class="card input-card"><label class="label" for="query">What is happening?</label>
+                <p class="label-sub">Include the service, error, and who is affected.</p><textarea id="query"
+                    placeholder="Example: Payment API returns HTTP 500 for some users after checkout..."></textarea>
+                <div class="actions"><button id="submit" class="primary">Find guidance</button><button id="clear"
+                        class="secondary">Clear</button></div>
+                <div class="hint">Use simulated details only. Avoid customer data, credentials, or production secrets.
+                </div>
+                <div class="examples"><span class="label">Try a sample issue</span><br><button
+                        class="secondary sample">Payment API returns 500 after checkout</button><button
+                        class="secondary sample">Users cannot log in after password reset</button><button
+                        class="secondary sample">Application is slow and database connections timeout</button><button
+                        class="secondary sample">Printer has a paper jam</button></div>
+            </section>
+            <section class="card answer" id="answer">
+                <h2>Suggested guidance</h2>
+                <div class="placeholder">Enter an issue or choose a sample to see guidance and supporting sources.</div>
+            </section>
+        </div>
+        <section class="card kb" style="margin-top:18px">
+            <h2>About this prototype</h2>
+            <p class="hint">Search uses explainable keyword overlap and a small synonym map. AI generation is optional
+                and uses retrieved entries as context. If no entry meets the minimum match threshold, the assistant asks
+                for details instead of proposing a fix. It does not connect to monitoring, ticketing, or production
+                systems.</p>
+        </section>
+    </main>
+    <script src="/app.js" defer></script>
+</body>
+
+</html>
